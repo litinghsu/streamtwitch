@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+  <style>
+    body { font-family: sans-serif; text-align: center; background: transparent; margin: 0; padding: 40px; }
+    .container { display: flex; justify-content: center; align-items: center; gap: 40px; }
+    .player { display: flex; align-items: center; gap: 10px; }
+    .bar img { width: 40px; }
+    .vs { font-size: 24px; font-weight: bold; }
+  </style>
+</head><body>
+  <div class="container">
+    <div class="player" id="player1">
+      <div class="name" id="name1">Player 1</div>
+      <div class="bar" id="bar1"></div>
+    </div>
+    <div class="vs">VS</div>
+    <div class="player" id="player2">
+      <div class="bar" id="bar2"></div>
+      <div class="name" id="name2">Player 2</div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    const full = 'hp_full.png', empty = 'hp_empty.png', max = 3;
+    db.ref().on('value', snap => {
+      const d = snap.val() || {};
+      const p1 = d.player1 ?? { name: 'Player 1', hp: 3 };
+      const p2 = d.player2 ?? { name: 'Player 2', hp: 3 };
+
+      document.getElementById("name1").textContent = p1.name;
+      document.getElementById("bar1").innerHTML = Array.from({length: max}, (_,j) =>
+        `<img src="${j < p1.hp ? full : empty}">`).join('');
+
+      document.getElementById("name2").textContent = p2.name;
+      document.getElementById("bar2").innerHTML = Array.from({length: max}, (_,j) =>
+        `<img src="${j < p2.hp ? full : empty}">`).join('');
+    });
+  </script>
+</body></html>

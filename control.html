@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><style>
+  body{font-family:sans-serif;text-align:center;}
+  .player{margin:20px;}
+</style></head><body>
+  <div class="player">
+    <input id="n1" placeholder="Player 1 name"><br>
+    <button onclick="chg('player1',-1)">-1</button>
+    <button onclick="chg('player1',+1)">+1</button>
+    <span id="hp1">3</span>
+  </div>
+  <div class="player">
+    <input id="n2" placeholder="Player 2 name"><br>
+    <button onclick="chg('player2',-1)">-1</button>
+    <button onclick="chg('player2',+1)">+1</button>
+    <span id="hp2">3</span>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    const max=3;
+    function chg(k,delta){
+      const name = document.getElementById(k==='player1'?'n1':'n2').value || (k==='player1'?'Player 1':'Player 2');
+      const span = document.getElementById(k==='player1'?'hp1':'hp2');
+      db.ref(k).once('value').then(s=>{
+        let hp = s.val()?.hp ?? max;
+        hp = Math.min(max,Math.max(0,hp+delta));
+        db.ref(k).set({ name, hp });
+        span.textContent = hp;
+      });
+    }
+    db.ref().on('value',snap=>{
+      const v=snap.val();
+      document.getElementById('hp1').textContent=v?.player1?.hp??max;
+      document.getElementById('hp2').textContent=v?.player2?.hp??max;
+      document.getElementById('n1').value=v?.player1?.name||'';
+      document.getElementById('n2').value=v?.player2?.name||'';
+    });
+  </script>
+</body></html>
