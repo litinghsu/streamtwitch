@@ -1,10 +1,10 @@
-
-// 將以下內容換成你的 Firebase 設定
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
+  apiKey: "AIzaSyCy9qNr7tYUpuY6uECnd_DWOyQG4R3JB88",
+  authDomain: "streamtwitch-4c4af.firebaseapp.com",
+  databaseURL: "https://streamtwitch-4c4af-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "streamtwitch-4c4af",
+  storageBucket: "streamtwitch-4c4af.firebasestorage.app",
+  messagingSenderId: "209171124343",
+  appId: "1:209171124343:web:811833e3028542e40cb672",
+  measurementId: "G-GDWF67N6WY"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
